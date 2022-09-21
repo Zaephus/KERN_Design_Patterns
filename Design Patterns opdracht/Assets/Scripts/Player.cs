@@ -5,9 +5,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
+    public bool isSprinting;
+
     [SerializeField] private int walkSpeed = 3;
     [SerializeField] private int sprintSpeed = 6;
-    private int currentSpeed;
+    private int currentMaxSpeed;
 
     [SerializeField] private int walkForce = 20;
     [SerializeField] private int sprintForce = 30;
@@ -21,36 +23,37 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rigidBody;
 
-    private Vector2 velocity;
-
-    public bool movingRight;
-    public bool movingLeft;
-    public bool isJumping;
-    public bool isSprinting;
-
     private bool isGrounded;
 
     private InputHandler inputHandler;
 
-    private ICommand currentCommand;
-
     private void Start()
     {
-        inputHandler = new InputHandler(new WalkRightCommand(), new WalkLeftCommand(), new JumpCommand(), new SprintCommand());
+        inputHandler = new InputHandler(new WalkRightCommand(), new WalkLeftCommand(), new JumpCommand(), new SprintCommand(), new WalkCommand());
         rigidBody = GetComponent<Rigidbody2D>();
+        currentMaxSpeed = walkSpeed;
         currentMoveForce = walkForce;
     }
 
     private void Update()
     {
-        
+        foreach(ICommand command in inputHandler.HandleInput())
+        {
+            command.Execute(gameObject);
+        }
+
+        if(isSprinting && isGrounded) {
+            currentMaxSpeed = sprintSpeed;
+            currentMoveForce = sprintForce;
+        }
+        else if(isGrounded) {
+            currentMaxSpeed = walkSpeed;
+            currentMoveForce = walkForce;
+        }
     }
 
     private void FixedUpdate()
     {
-        currentCommand = inputHandler.HandleInput();
-        currentCommand?.Execute(gameObject);
-        Debug.Log(currentCommand);
 
         if(rigidBody.velocity.y < 0)
         {
@@ -60,11 +63,12 @@ public class Player : MonoBehaviour
         {
             rigidBody.gravityScale = 1;
         }
+
     }
 
     public void Move(int _dir)
     {
-        if(Mathf.Abs(rigidBody.velocity.x) <= currentSpeed)
+        if(Mathf.Abs(rigidBody.velocity.x) <= currentMaxSpeed)
         {
             rigidBody.AddForce(currentMoveForce * new Vector2(_dir,0));
         }

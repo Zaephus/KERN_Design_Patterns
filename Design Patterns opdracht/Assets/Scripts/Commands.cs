@@ -30,6 +30,14 @@ public class SprintCommand : ICommand
 {
     public void Execute(GameObject _actor)
     {
-        //Sprint
+        _actor.GetComponent<Player>().isSprinting = true;
+    }
+}
+
+public class WalkCommand : ICommand
+{
+    public void Execute(GameObject _actor)
+    {
+        _actor.GetComponent<Player>().isSprinting = false;
     }
 }

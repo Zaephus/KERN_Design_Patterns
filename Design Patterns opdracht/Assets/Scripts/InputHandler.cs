@@ -9,39 +9,48 @@ public class InputHandler
     private ICommand leftButtonHeld;
     private ICommand spacePressed;
     private ICommand shiftHeld;
+    private ICommand shiftReleased;
 
-    public InputHandler(ICommand _right, ICommand _left, ICommand _space, ICommand _shift)
+    public InputHandler(ICommand _right, ICommand _left, ICommand _space, ICommand _shiftHeld, ICommand _shiftReleased)
     {
         this.rightButtonHeld = _right;
         this.leftButtonHeld = _left;
         this.spacePressed = _space;
-        this.shiftHeld = _shift;
+        this.shiftHeld = _shiftHeld;
+        this.shiftReleased = _shiftReleased;
     }
 
-    public ICommand HandleInput()
+    public List<ICommand> HandleInput()
     {
+
+        List<ICommand> commands = new List<ICommand>();
 
         if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            return rightButtonHeld;
+            commands.Add(rightButtonHeld);
         }
 
         if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            return leftButtonHeld;
+            commands.Add(leftButtonHeld);
         }
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            return spacePressed;
+            commands.Add(spacePressed);
         }
 
         if(Input.GetKey(KeyCode.LeftShift))
         {
-            return shiftHeld;
+            commands.Add(shiftHeld);
         }
 
-        return null;
+        if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            commands.Add(shiftReleased);
+        }
+
+        return commands;
         
     }
 
