@@ -5,30 +5,30 @@ using UnityEngine;
 public class InputHandler
 {
 
-    private ICommand rightButtonPressed;
-    private ICommand leftButtonPressed;
+    private ICommand rightButtonHeld;
+    private ICommand leftButtonHeld;
     private ICommand spacePressed;
-    private ICommand shiftPressed;
+    private ICommand shiftHeld;
 
     public InputHandler(ICommand _right, ICommand _left, ICommand _space, ICommand _shift)
     {
-        this.rightButtonPressed = _right;
-        this.leftButtonPressed = _left;
+        this.rightButtonHeld = _right;
+        this.leftButtonHeld = _left;
         this.spacePressed = _space;
-        this.shiftPressed = _shift;
+        this.shiftHeld = _shift;
     }
 
     public ICommand HandleInput()
     {
 
-        if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            return rightButtonPressed;
+            return rightButtonHeld;
         }
 
-        if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            return leftButtonPressed;
+            return leftButtonHeld;
         }
 
         if(Input.GetKeyDown(KeyCode.Space))
@@ -36,9 +36,9 @@ public class InputHandler
             return spacePressed;
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+        if(Input.GetKey(KeyCode.LeftShift))
         {
-            return shiftPressed;
+            return shiftHeld;
         }
 
         return null;

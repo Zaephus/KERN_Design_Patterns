@@ -6,7 +6,7 @@ public class WalkRightCommand : ICommand
 {
     public void Execute(GameObject _actor)
     {
-        //Walk right
+        _actor.GetComponent<Player>().Move(1);
     }
 }
 
@@ -14,7 +14,7 @@ public class WalkLeftCommand : ICommand
 {
     public void Execute(GameObject _actor)
     {
-        //Walk left
+        _actor.GetComponent<Player>().Move(-1);
     }
 }
 
@@ -22,7 +22,7 @@ public class JumpCommand : ICommand
 {
     public void Execute(GameObject _actor)
     {
-        //Do a jump
+        _actor.GetComponent<Player>().Jump();
     }
 }
 
