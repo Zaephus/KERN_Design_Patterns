@@ -11,13 +11,25 @@ public class InputHandler
     private ICommand shiftHeld;
     private ICommand shiftReleased;
 
-    public InputHandler(ICommand _right, ICommand _left, ICommand _space, ICommand _shiftHeld, ICommand _shiftReleased)
+    private ICommand oneButtonPressed;
+    private ICommand twoButtonPressed;
+    private ICommand threeButtonPressed;
+
+    private ICommand fButtonPressed;
+
+    public InputHandler(ICommand _right, ICommand _left, ICommand _space, ICommand _shiftHeld, ICommand _shiftReleased, ICommand _one, ICommand _two, ICommand _three, ICommand _f)
     {
         this.rightButtonHeld = _right;
         this.leftButtonHeld = _left;
         this.spacePressed = _space;
         this.shiftHeld = _shiftHeld;
         this.shiftReleased = _shiftReleased;
+
+        this.oneButtonPressed = _one;
+        this.twoButtonPressed = _two;
+        this.threeButtonPressed = _three;
+
+        this.fButtonPressed = _f;
     }
 
     public List<ICommand> HandleInput()
@@ -48,6 +60,26 @@ public class InputHandler
         if(Input.GetKeyUp(KeyCode.LeftShift))
         {
             commands.Add(shiftReleased);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            commands.Add(oneButtonPressed);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            commands.Add(twoButtonPressed);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            commands.Add(threeButtonPressed);
+        }
+
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            commands.Add(fButtonPressed);
         }
 
         return commands;

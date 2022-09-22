@@ -41,3 +41,35 @@ public class WalkCommand : ICommand
         _actor.GetComponent<Player>().isSprinting = false;
     }
 }
+
+public class ToAbilityOneCommand : ICommand
+{
+    public void Execute(GameObject _actor)
+    {
+        _actor.GetComponent<Player>().SetCurrentAbility(0);
+    }
+}
+
+public class ToAbilityTwoCommand : ICommand
+{
+    public void Execute(GameObject _actor)
+    {
+        _actor.GetComponent<Player>().SetCurrentAbility(1);
+    }
+}
+
+public class ToAbilityThreeCommand : ICommand
+{
+    public void Execute(GameObject _actor)
+    {
+        _actor.GetComponent<Player>().SetCurrentAbility(2);
+    }
+}
+
+public class ActivateAbilityCommand : ICommand
+{
+    public void Execute(GameObject _actor)
+    {
+        _actor.GetComponent<Player>().ActivateAbility();
+    }
+}

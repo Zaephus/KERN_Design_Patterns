@@ -27,9 +27,13 @@ public class Player : MonoBehaviour
 
     private InputHandler inputHandler;
 
+    private List<Ability> abilities = new List<Ability>() {new Dash(), new FireSpell(), new FusRoDah()};
+    private Ability currentAbility;
+
     private void Start()
     {
-        inputHandler = new InputHandler(new WalkRightCommand(), new WalkLeftCommand(), new JumpCommand(), new SprintCommand(), new WalkCommand());
+        inputHandler = new InputHandler(new WalkRightCommand(), new WalkLeftCommand(), new JumpCommand(), new SprintCommand(), new WalkCommand(), new ToAbilityOneCommand(),
+                       new ToAbilityTwoCommand(), new ToAbilityThreeCommand(), new ActivateAbilityCommand());
         rigidBody = GetComponent<Rigidbody2D>();
         currentMaxSpeed = walkSpeed;
         currentMoveForce = walkForce;
@@ -82,6 +86,16 @@ public class Player : MonoBehaviour
         {
             rigidBody.AddForce(jumpForce * Vector2.up,ForceMode2D.Impulse);
         }
+    }
+
+    public void SetCurrentAbility(int _index)
+    {
+        currentAbility = abilities[_index];
+    }
+
+    public void ActivateAbility()
+    {
+        currentAbility.Activate();
     }
 
     public void OnTriggerEnter2D(Collider2D other)
